@@ -80,5 +80,5 @@
 /* Keep the generated PDF render surface inside html2canvas' capture geometry. */
 @import url("./components/pdf-render-fix.css?v=20261013pdf3");
 
-/* Phone header quick theme controls: follow device/system + force dark mode. */
-@import url("./components/mobile-theme-quick.css?v=20261013theme2");
+/* Phone header: one working dark-mode toggle beside the menu. */
+@import url("./components/mobile-theme-quick.css?v=20261013theme3");
