@@ -1,5 +1,5 @@
 /*
-Claude Builder Club — AOU Egypt
+Claude Builder Club @ AOU Egypt
 Recruitment backend for Google Sheets + Apps Script.
 
 SETUP:
@@ -19,7 +19,7 @@ const SETTINGS = {
   APPLICATIONS_SHEET: "Applications",
   CONFIG_SHEET: "Config",
   SEND_APPLICANT_EMAIL: true,
-  CLUB_NAME: "Claude Builder Club — AOU Egypt",
+  CLUB_NAME: "Claude Builder Club @ AOU Egypt",
   CLUB_EMAIL: "claudebuilder.aou@gmail.com",
   WHATSAPP_URL: "https://chat.whatsapp.com/GwiXzxyBXTBDsBqeenPYP8"
 };

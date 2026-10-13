@@ -1,6 +1,6 @@
 # Brand assets
 
-Canonical location for Claude Builder Club — AOU Egypt visual assets used by this website.
+Canonical location for Claude Builder Club @ AOU Egypt visual assets used by this website.
 
 ## Structure
 

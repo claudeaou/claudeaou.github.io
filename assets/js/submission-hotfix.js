@@ -507,7 +507,7 @@
       } else if (legacyFallback) {
         messageEl.textContent = "Your application was sent successfully and is being processed.";
       } else {
-        messageEl.textContent = "Your application to the Claude Builder Club — AOU Egypt founding team has been received successfully.";
+        messageEl.textContent = "Your application to the Claude Builder Club @ AOU Egypt founding team has been received successfully.";
       }
     }
 

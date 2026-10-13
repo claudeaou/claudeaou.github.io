@@ -1,4 +1,4 @@
-# Claude Builder Club — AOU Egypt
+# Claude Builder Club @ AOU Egypt
 # Final Launch Guide
 
 ## Already prepared

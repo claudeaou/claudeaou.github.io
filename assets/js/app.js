@@ -533,7 +533,7 @@ async function submitApplication(){
     document.querySelector("#successTeam").textContent =
       displayRole ? `${displayTeam} · ${displayRole}` : displayTeam;
     document.querySelector("#successMessage").textContent =
-      "Your application to the Claude Builder Club — AOU Egypt founding team has been received for processing.";
+      "Your application to the Claude Builder Club @ AOU Egypt founding team has been received for processing.";
     document.querySelector(".modal-card").scrollTop = 0;
   };
 

@@ -1,7 +1,7 @@
-# Claude Builder Club — AOU Egypt
+# Claude Builder Club @ AOU Egypt
 ## Founding Team Recruitment Website
 
-Production recruitment website for the Claude Builder Club — AOU Egypt founding team.
+Production recruitment website for the Claude Builder Club @ AOU Egypt founding team.
 
 **Public site:** `https://claudeaou.github.io/`
 
