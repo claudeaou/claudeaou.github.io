@@ -608,7 +608,7 @@
     window.addEventListener("message", onMessage);
 
     bridge = document.createElement("iframe");
-    bridge.src = `${BRIDGE_URL}?v=20261013org1`;
+    bridge.src = `${BRIDGE_URL}?v=20261013org2`;
     bridge.hidden = true;
     bridge.setAttribute("aria-hidden", "true");
     bridge.addEventListener("load", () => setTimeout(sendToBridge, 0), { once: true });
