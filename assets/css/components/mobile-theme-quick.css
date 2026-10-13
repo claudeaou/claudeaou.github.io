@@ -1,11 +1,11 @@
-/* Mobile header theme shortcuts: follow phone/system theme + force dark mode. */
+/* Mobile header dark-mode shortcut. Only the moon button is shown on phones. */
 .mobile-theme-quick{display:none}
 
 @media(max-width:760px){
-  /* Reserve enough room for System, Dark and the mobile menu button. */
+  /* Reserve room for Dark + mobile menu only. */
   .nav .brand{
-    width:calc(100% - 142px)!important;
-    max-width:calc(100% - 142px)!important;
+    width:calc(100% - 96px)!important;
+    max-width:calc(100% - 96px)!important;
   }
 
   .nav .nav-links{
@@ -16,8 +16,9 @@
     gap:7px!important;
   }
 
-  /* Keep the desktop cycling control out of the phone header. */
+  /* Desktop cycling control and drawer theme row stay out of the phone UI. */
   .nav .theme-toggle{display:none!important;visibility:hidden!important}
+  .mobile-menu-theme{display:none!important}
 
   .nav .nav-links > .mobile-theme-quick{
     display:inline-grid!important;
@@ -54,24 +55,18 @@
   }
 
   .nav .mobile-theme-quick[aria-pressed="true"]{
-    color:var(--accent)!important;
-    border-color:color-mix(in srgb,var(--accent) 58%,var(--line))!important;
-    background:color-mix(in srgb,var(--accent) 10%,var(--surface))!important;
+    color:#f0a07f!important;
+    border-color:color-mix(in srgb,#f0a07f 56%,var(--line))!important;
+    background:color-mix(in srgb,#f0a07f 10%,var(--surface))!important;
   }
 
   html[data-theme="dark"] .nav .mobile-theme-quick{
     background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
   }
 
-  html[data-theme="dark"] .nav .mobile-theme-quick[aria-pressed="true"]{
-    color:#f0a07f!important;
-    border-color:color-mix(in srgb,#f0a07f 56%,var(--line))!important;
-    background:color-mix(in srgb,#f0a07f 10%,var(--surface))!important;
-  }
-
   .mobile-theme-quick svg{
-    width:20px!important;
-    height:20px!important;
+    width:19px!important;
+    height:19px!important;
     display:block!important;
     fill:none!important;
     stroke:currentColor!important;
@@ -80,14 +75,12 @@
     stroke-linejoin:round!important;
     pointer-events:none!important;
   }
-
-  .mobile-theme-dark svg{width:19px!important;height:19px!important}
 }
 
 @media(max-width:420px){
   .nav .brand{
-    width:calc(100% - 134px)!important;
-    max-width:calc(100% - 134px)!important;
+    width:calc(100% - 92px)!important;
+    max-width:calc(100% - 92px)!important;
   }
 
   .nav .nav-links{height:38px!important;min-height:38px!important;gap:6px!important}
@@ -103,8 +96,8 @@
 
 @media(max-width:360px){
   .nav .brand{
-    width:calc(100% - 124px)!important;
-    max-width:calc(100% - 124px)!important;
+    width:calc(100% - 86px)!important;
+    max-width:calc(100% - 86px)!important;
   }
 
   .nav .nav-links{height:36px!important;min-height:36px!important;gap:5px!important}
