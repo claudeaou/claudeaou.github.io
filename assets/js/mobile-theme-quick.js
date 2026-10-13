@@ -12,23 +12,17 @@
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const desktopToggle = document.querySelector("#themeToggle");
 
-    // Remove the old phone/system shortcut from earlier releases, even if an
-    // older cached script inserted it before this module loaded.
     document.querySelectorAll("#mobileThemeSystem,.mobile-theme-system").forEach((el) => el.remove());
 
-    let darkButton = document.querySelector("#mobileThemeDark");
-    if (!darkButton) {
-      darkButton = document.createElement("button");
-      darkButton.type = "button";
-      darkButton.id = "mobileThemeDark";
-      darkButton.className = "mobile-theme-quick mobile-theme-dark";
-      darkButton.innerHTML = `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 15.2A8.15 8.15 0 0 1 8.8 4a8.45 8.45 0 1 0 11.2 11.2Z"></path>
-        </svg>`;
+    let themeButton = document.querySelector("#mobileThemeDark");
+    if (!themeButton) {
+      themeButton = document.createElement("button");
+      themeButton.type = "button";
+      themeButton.id = "mobileThemeDark";
+      themeButton.className = "mobile-theme-quick mobile-theme-dark";
 
       const anchor = document.querySelector(".mobile-menu-toggle", nav) || document.querySelector(".nav-apply", nav);
-      nav.insertBefore(darkButton, anchor || null);
+      nav.insertBefore(themeButton, anchor || null);
     }
 
     function getStoredPreference() {
@@ -64,12 +58,24 @@
       desktopToggle.setAttribute("aria-label", "Theme: " + text + ". Tap to change.");
     }
 
+    function setButtonIcon(isDark) {
+      themeButton.innerHTML = isDark
+        ? `<svg viewBox="0 0 24 24" aria-hidden="true">
+             <path d="M20 15.2A8.15 8.15 0 0 1 8.8 4a8.45 8.45 0 1 0 11.2 11.2Z"></path>
+           </svg>`
+        : `<svg viewBox="0 0 24 24" aria-hidden="true">
+             <circle cx="12" cy="12" r="4"></circle>
+             <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
+           </svg>`;
+    }
+
     function syncButton() {
       const actual = root.dataset.theme || resolveTheme(getStoredPreference());
       const isDark = actual === "dark";
-      darkButton.setAttribute("aria-pressed", String(isDark));
-      darkButton.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-      darkButton.setAttribute("title", isDark ? "Light mode" : "Dark mode");
+      setButtonIcon(isDark);
+      themeButton.setAttribute("aria-pressed", String(isDark));
+      themeButton.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+      themeButton.setAttribute("title", isDark ? "Dark mode · switch to light" : "Light mode · switch to dark");
     }
 
     function applyExplicitTheme(actual) {
@@ -84,18 +90,17 @@
       window.dispatchEvent(new CustomEvent("cbc:themechange", { detail: { theme: pref } }));
     }
 
-    function toggleDarkMode(event) {
+    function toggleTheme(event) {
       event?.preventDefault?.();
       event?.stopPropagation?.();
       const current = root.dataset.theme || resolveTheme(getStoredPreference());
       applyExplicitTheme(current === "dark" ? "light" : "dark");
     }
 
-    // Replace any handler that may have been attached by an older cached copy.
-    const cleanButton = darkButton.cloneNode(true);
-    darkButton.replaceWith(cleanButton);
-    darkButton = cleanButton;
-    darkButton.addEventListener("click", toggleDarkMode, { passive: false });
+    const cleanButton = themeButton.cloneNode(true);
+    themeButton.replaceWith(cleanButton);
+    themeButton = cleanButton;
+    themeButton.addEventListener("click", toggleTheme, { passive: false });
 
     media.addEventListener?.("change", () => {
       if (getStoredPreference() === "system") {
