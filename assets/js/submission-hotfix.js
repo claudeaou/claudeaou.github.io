@@ -10,6 +10,8 @@
 */
 (() => {
   const OFFICIAL_ORIGIN = "https://claudeaou.github.io";
+  const BRIDGE_ORIGIN = "https://mhmdwaelanwr.github.io";
+  const BRIDGE_URL = `${BRIDGE_ORIGIN}/hiring-cbc/bridge.html`;
   const DRAFT_KEY = "cbc-aou-hiring-draft-v1";
   const CFG = window.CLUB_CONFIG || {};
   const HTML2PDF_SRC = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
@@ -517,126 +519,109 @@
   }
 
   async function submitVerified() {
-    if (!recruitmentOpen()) {
-      alert("Applications are not open.");
+  if (!recruitmentOpen()) {
+    alert("Applications are not open.");
+    return;
+  }
+
+  setBusy(true);
+
+  const cleanPayload = formObject();
+  const fallbackReference = makeSubmissionReference();
+  const nonce = makeNonce();
+  const transportPayload = {
+    ...cleanPayload,
+    submission_reference: fallbackReference,
+    _transport: "iframe",
+    _nonce: nonce
+  };
+
+  let bridge = null;
+  let timer = null;
+  let settled = false;
+  let sent = false;
+
+  const cleanup = () => {
+    if (timer) clearTimeout(timer);
+    window.removeEventListener("message", onMessage);
+    bridge?.remove();
+  };
+
+  const finishWithError = message => {
+    if (settled) return;
+    settled = true;
+    cleanup();
+    setBusy(false);
+    alert(message || "We could not submit your application. Your draft is still saved on this device.");
+  };
+
+  const sendToBridge = () => {
+    if (sent || settled || !bridge?.contentWindow) return;
+    sent = true;
+    bridge.contentWindow.postMessage({
+      type: "CBC_BRIDGE_SUBMIT",
+      nonce,
+      endpoint: CFG.SUBMISSION_ENDPOINT,
+      payload: transportPayload
+    }, BRIDGE_ORIGIN);
+  };
+
+  const onMessage = event => {
+    const data = event.data;
+    if (
+      settled ||
+      !bridge ||
+      event.source !== bridge.contentWindow ||
+      event.origin !== BRIDGE_ORIGIN ||
+      !data ||
+      typeof data !== "object"
+    ) {
       return;
     }
 
-    setBusy(true);
-
-    const cleanPayload = formObject();
-    const fallbackReference = makeSubmissionReference();
-    const nonce = makeNonce();
-    const transportPayload = {
-      ...cleanPayload,
-      submission_reference: fallbackReference,
-      _transport: "iframe",
-      _nonce: nonce
-    };
-
-    let iframe = null;
-    let transportForm = null;
-    let timer = null;
-    let responseFallbackTimer = null;
-    let settled = false;
-    let submitted = false;
-
-    const cleanup = () => {
-      if (timer) clearTimeout(timer);
-      if (responseFallbackTimer) clearTimeout(responseFallbackTimer);
-      window.removeEventListener("message", onMessage);
-      if (transportForm) transportForm.remove();
-      if (iframe) iframe.remove();
-    };
-
-    const finishWithError = message => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      setBusy(false);
-      alert(message || "We could not submit your application. Your draft is still saved on this device.");
-    };
-
-    const finishLegacySuccess = () => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      setBusy(false);
-      showSuccessResult({ ok: true }, cleanPayload, fallbackReference, true);
-    };
-
-    const onMessage = event => {
-      const data = event.data;
-      if (
-        settled ||
-        !iframe ||
-        event.source !== iframe.contentWindow ||
-        !data ||
-        data.type !== "CBC_APPLICATION_RESULT" ||
-        String(data.nonce || "") !== nonce
-      ) {
-        return;
-      }
-
-      settled = true;
-      cleanup();
-      setBusy(false);
-
-      if (data.ok) {
-        showSuccessResult(data, cleanPayload, fallbackReference, false);
-      } else {
-        alert(data.message || "The application service rejected the submission. Your draft is still saved.");
-      }
-    };
-
-    try {
-      iframe = document.createElement("iframe");
-      iframe.name = "cbc-submit-verified-" + Date.now();
-      iframe.srcdoc = "<!doctype html><title>ready</title>";
-      iframe.hidden = true;
-      iframe.setAttribute("aria-hidden", "true");
-      document.body.appendChild(iframe);
-
-      await new Promise(resolve => {
-        iframe.addEventListener("load", resolve, { once: true });
-        setTimeout(resolve, 300);
-      });
-
-      window.addEventListener("message", onMessage);
-
-      // A completed navigation after submit means the Apps Script endpoint replied.
-      // Give a modern deployment a short grace period to send postMessage first;
-      // otherwise fall back to the legacy response behavior without re-submitting.
-      iframe.addEventListener("load", () => {
-        if (!submitted || settled) return;
-        if (responseFallbackTimer) clearTimeout(responseFallbackTimer);
-        responseFallbackTimer = setTimeout(finishLegacySuccess, 1500);
-      });
-
-      transportForm = document.createElement("form");
-      transportForm.method = "POST";
-      transportForm.action = CFG.SUBMISSION_ENDPOINT;
-      transportForm.target = iframe.name;
-      transportForm.hidden = true;
-
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "application_payload";
-      input.value = JSON.stringify(transportPayload);
-      transportForm.appendChild(input);
-      document.body.appendChild(transportForm);
-
-      timer = setTimeout(() => {
-        finishWithError("The application service did not respond. Your draft is saved, so please check your connection and try again.");
-      }, 45000);
-
-      submitted = true;
-      transportForm.submit();
-    } catch (error) {
-      console.error("Application submission failed:", error);
-      finishWithError("We could not send your application. Your draft is saved on this device—please check your connection and try again.");
+    if (data.type === "CBC_BRIDGE_READY") {
+      sendToBridge();
+      return;
     }
+
+    if (String(data.nonce || "") !== nonce) return;
+
+    if (data.type === "CBC_BRIDGE_ERROR") {
+      finishWithError(data.message || "The application service did not return a verified response.");
+      return;
+    }
+
+    if (data.type !== "CBC_APPLICATION_RESULT") return;
+
+    settled = true;
+    cleanup();
+    setBusy(false);
+
+    if (data.ok) {
+      showSuccessResult(data, cleanPayload, fallbackReference, false);
+    } else {
+      alert(data.message || "The application service rejected the submission. Your draft is still saved.");
+    }
+  };
+
+  try {
+    window.addEventListener("message", onMessage);
+
+    bridge = document.createElement("iframe");
+    bridge.src = `${BRIDGE_URL}?v=20261013org1`;
+    bridge.hidden = true;
+    bridge.setAttribute("aria-hidden", "true");
+    bridge.addEventListener("load", () => setTimeout(sendToBridge, 0), { once: true });
+    document.body.appendChild(bridge);
+
+    timer = setTimeout(() => {
+      finishWithError("The application service did not return a verified response in time. Your draft is saved, so please try again.");
+    }, 50000);
+  } catch (error) {
+    console.error("Application submission failed:", error);
+    finishWithError("We could not send your application. Your draft is saved on this device—please check your connection and try again.");
   }
+}
 
   /*
     Capture only the final Submit click on the official GitHub Pages origin.
