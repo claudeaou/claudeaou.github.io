@@ -357,7 +357,7 @@
       <div class="pdf-hero">
         <div class="pdf-kicker">Submitted application</div>
         <h1 dir="auto">${escapeHtml(applicantName)}</h1>
-        <p>This PDF is a personal copy of the information submitted to Claude Builder Club - AOU Egypt.</p>
+        <p>This PDF is a personal copy of the information submitted to Claude Builder Club @ AOU Egypt.</p>
       </div>
 
       <div class="pdf-summary">
@@ -428,7 +428,7 @@
         .replace(/[^a-z0-9_-]+/gi, "_");
 
       const options = {
-        margin: [10, 12, 14, 12],
+        margin: [8, 10, 12, 10],
         filename: `${safeName}_${safeReference}_Application.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {
@@ -438,13 +438,17 @@
           logging: false,
           scrollX: 0,
           scrollY: 0,
-          windowWidth: Math.max(900, node.scrollWidth + 40),
-          width: node.scrollWidth
+          windowWidth: Math.max(1, Math.ceil(node.getBoundingClientRect().width)),
+          windowHeight: Math.max(1, Math.ceil(node.scrollHeight)),
+          width: Math.max(1, Math.ceil(node.getBoundingClientRect().width)),
+          height: Math.max(1, Math.ceil(node.scrollHeight)),
+          x: 0,
+          y: 0
         },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait", compress: true },
         pagebreak: {
           mode: ["css", "legacy"],
-          avoid: [".pdf-field", ".pdf-summary-card", ".pdf-section-head", ".pdf-note"]
+          avoid: [".pdf-summary-card", ".pdf-section-head", ".pdf-note"]
         },
         enableLinks: true
       };
@@ -458,9 +462,9 @@
         try {
           pdf.setProperties({
             title: `${built.applicantName} - CBC AOU Founding Team Application`,
-            subject: "Claude Builder Club - AOU Egypt founding team application copy",
-            author: "Claude Builder Club - AOU Egypt",
-            creator: "Claude Builder Club - AOU Egypt recruitment portal"
+            subject: "Claude Builder Club @ AOU Egypt founding team application copy",
+            author: "Claude Builder Club @ AOU Egypt",
+            creator: "Claude Builder Club @ AOU Egypt recruitment portal"
           });
         } catch (_) {}
 
@@ -472,7 +476,7 @@
           pdf.setFont("helvetica", "normal");
           pdf.setFontSize(7.5);
           pdf.setTextColor(122, 119, 111);
-          pdf.text("Claude Builder Club - AOU Egypt", 10, pageHeight - 5.2);
+          pdf.text("Claude Builder Club @ AOU Egypt", 10, pageHeight - 5.2);
           pdf.text(`Page ${page} of ${totalPages}`, pageWidth - 10, pageHeight - 5.2, { align: "right" });
         }
       });
