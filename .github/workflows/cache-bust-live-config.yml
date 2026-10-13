@@ -1,0 +1,39 @@
+name: Cache bust live recruitment config
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/cache-bust-live-config.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Force fresh live config URL
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('config.js?v=20261013theme5', 'config.js?v=20261013livefix1')
+          text = text.replace('config.js?v=20261013theme4', 'config.js?v=20261013livefix1')
+          path.write_text(text, encoding='utf-8')
+
+      - name: Publish cache bust and remove one-time workflow
+        shell: bash
+        run: |
+          git config user.name "Claude AOU Release"
+          git config user.email "actions@users.noreply.github.com"
+          git rm -f .github/workflows/cache-bust-live-config.yml
+          git add -A
+          git commit -m "Force fresh live recruitment config"
+          git push origin main
