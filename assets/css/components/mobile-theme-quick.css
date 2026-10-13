@@ -1,5 +1,6 @@
 /* Mobile header dark-mode shortcut. Only the moon button is shown on phones. */
 .mobile-theme-quick{display:none}
+#mobileThemeSystem,.mobile-theme-system{display:none!important;visibility:hidden!important}
 
 @media(max-width:760px){
   /* Reserve room for Dark + mobile menu only. */
@@ -26,6 +27,10 @@
     opacity:1!important;
     place-items:center!important;
     position:relative!important;
+    z-index:20!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    -webkit-tap-highlight-color:transparent!important;
     width:40px!important;
     height:40px!important;
     min-width:40px!important;
@@ -42,29 +47,41 @@
     transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease!important;
   }
 
-  .nav .mobile-theme-quick:hover,
-  .nav .mobile-theme-quick:focus-visible{
+  .nav .nav-links > #mobileThemeSystem,
+  .nav .nav-links > .mobile-theme-system{
+    display:none!important;
+    visibility:hidden!important;
+    width:0!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+
+  .nav .mobile-theme-dark:hover,
+  .nav .mobile-theme-dark:focus-visible{
     background:var(--surface-2)!important;
     border-color:color-mix(in srgb,var(--accent) 28%,var(--line))!important;
     color:var(--ink)!important;
   }
 
-  .nav .mobile-theme-quick:focus-visible{
+  .nav .mobile-theme-dark:focus-visible{
     outline:none!important;
     box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)!important;
   }
 
-  .nav .mobile-theme-quick[aria-pressed="true"]{
+  .nav .mobile-theme-dark[aria-pressed="true"]{
     color:#f0a07f!important;
     border-color:color-mix(in srgb,#f0a07f 56%,var(--line))!important;
     background:color-mix(in srgb,#f0a07f 10%,var(--surface))!important;
   }
 
-  html[data-theme="dark"] .nav .mobile-theme-quick{
+  html[data-theme="dark"] .nav .mobile-theme-dark{
     background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
   }
 
-  .mobile-theme-quick svg{
+  .mobile-theme-dark svg{
     width:19px!important;
     height:19px!important;
     display:block!important;
@@ -85,7 +102,7 @@
 
   .nav .nav-links{height:38px!important;min-height:38px!important;gap:6px!important}
 
-  .nav .nav-links > .mobile-theme-quick{
+  .nav .nav-links > .mobile-theme-dark{
     width:38px!important;
     height:38px!important;
     min-width:38px!important;
@@ -102,7 +119,7 @@
 
   .nav .nav-links{height:36px!important;min-height:36px!important;gap:5px!important}
 
-  .nav .nav-links > .mobile-theme-quick{
+  .nav .nav-links > .mobile-theme-dark{
     width:36px!important;
     height:36px!important;
     min-width:36px!important;
