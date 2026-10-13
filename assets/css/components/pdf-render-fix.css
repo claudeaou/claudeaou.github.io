@@ -1,14 +1,14 @@
 /*
   PDF render hardening.
-  Keep the temporary application sheet inside a conservative A4-safe width so
-  html2canvas/html2pdf cannot crop the right edge. The modal remains visually
-  above the temporary source while the PDF is rendered.
+  Render the temporary application sheet from the viewport origin so html2canvas
+  captures the sheet itself rather than a centered slice of the page. This fixes
+  the left blank band/right-edge cropping seen on mobile-generated PDFs.
 */
 
 .cbc-application-pdf{
-  position:relative!important;
-  left:auto!important;
-  top:auto!important;
+  position:fixed!important;
+  left:0!important;
+  top:0!important;
   right:auto!important;
   bottom:auto!important;
   display:block!important;
@@ -17,9 +17,9 @@
   min-width:0!important;
   height:auto!important;
   min-height:1px!important;
-  margin:0 auto!important;
+  margin:0!important;
   padding:0!important;
-  z-index:auto!important;
+  z-index:0!important;
   visibility:visible!important;
   opacity:1!important;
   overflow:visible!important;
@@ -28,6 +28,7 @@
   clip:auto!important;
   clip-path:none!important;
   contain:none!important;
+  background:#faf9f5!important;
 }
 
 .cbc-application-pdf,
@@ -45,32 +46,90 @@
   width:100%!important;
 }
 
-.cbc-application-pdf .pdf-field,
+.cbc-application-pdf .pdf-grid{
+  gap:6px!important;
+}
+
+.cbc-application-pdf .pdf-summary{
+  gap:6px!important;
+  margin-bottom:14px!important;
+}
+
 .cbc-application-pdf .pdf-summary-card{
   min-width:0!important;
   max-width:100%!important;
-  overflow:hidden!important;
+  overflow:visible!important;
+  padding:8px 9px!important;
   break-inside:avoid!important;
   page-break-inside:avoid!important;
 }
 
-.cbc-application-pdf .pdf-value,
-.cbc-application-pdf .pdf-summary-value{
+.cbc-application-pdf .pdf-hero{
+  padding:15px 0 12px!important;
+}
+
+.cbc-application-pdf .pdf-section{
+  margin-bottom:12px!important;
+}
+
+.cbc-application-pdf .pdf-section-head{
+  margin-bottom:6px!important;
+  padding-bottom:5px!important;
+  break-after:avoid-page!important;
+  page-break-after:avoid!important;
+}
+
+.cbc-application-pdf .pdf-field{
   min-width:0!important;
   max-width:100%!important;
+  overflow:visible!important;
+  padding:7px 8px 8px!important;
+  break-inside:avoid!important;
+  page-break-inside:avoid!important;
+}
+
+/* Long written answers are allowed to flow across a page boundary. Preventing
+   every long answer from splitting was creating large blank areas and orphaned
+   section headings on the previous page. */
+.cbc-application-pdf .pdf-field-long{
+  break-inside:auto!important;
+  page-break-inside:auto!important;
+}
+
+.cbc-application-pdf .pdf-label{
+  margin-bottom:3px!important;
+  font-size:7.4px!important;
+}
+
+.cbc-application-pdf .pdf-value{
+  min-width:0!important;
+  max-width:100%!important;
+  font-size:10.2px!important;
+  line-height:1.4!important;
+  overflow:visible!important;
   overflow-wrap:anywhere!important;
-  word-break:break-word!important;
+  word-break:normal!important;
   white-space:pre-wrap!important;
 }
 
-.cbc-application-pdf .pdf-section-head,
+.cbc-application-pdf .pdf-summary-value{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:visible!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  white-space:normal!important;
+}
+
 .cbc-application-pdf .pdf-note{
+  margin-top:2px!important;
+  padding:9px 10px!important;
   break-inside:avoid!important;
   page-break-inside:avoid!important;
 }
 
-/* The modal hides the temporary source sheet from the applicant while it is
-   rendered, without making the source itself invisible to html2canvas. */
+/* The modal stays above the temporary source sheet while html2canvas renders it.
+   The capture starts at x=0, so the sheet never leaks into the user's view. */
 .modal{
   position:fixed!important;
   z-index:10000!important;
