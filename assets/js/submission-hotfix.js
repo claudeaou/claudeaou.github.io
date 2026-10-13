@@ -293,7 +293,7 @@
     root.style.position = "absolute";
     root.style.left = "-100000px";
     root.style.top = "0";
-    root.style.width = "190mm";
+    root.style.width = "176mm";
     root.style.background = "#faf9f5";
     root.style.color = "#141413";
     root.style.zIndex = "-1";
@@ -303,7 +303,9 @@
         .cbc-application-pdf,
         .cbc-application-pdf *{box-sizing:border-box}
         .cbc-application-pdf{
-          width:190mm;
+          width:176mm;
+          max-width:176mm;
+          margin:0 auto;
           font-family:"Fraunces",Georgia,"Times New Roman",serif;
           font-size:11.5px;
           line-height:1.52;
@@ -322,7 +324,8 @@
         .pdf-kicker{color:#d97757;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
         .pdf-hero h1{margin:0;font-size:28px;line-height:1.05;font-weight:650;letter-spacing:-.045em;color:#141413}
         .pdf-hero p{margin:7px 0 0;color:#716e67;font-size:11px}
-        .pdf-summary{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:8px;margin:0 0 20px}
+        .pdf-summary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin:0 0 20px;width:100%}
+        .pdf-summary-card:nth-child(3){grid-column:1/-1}
         .pdf-summary-card{padding:10px 11px;border:1px solid #ddd9d0;border-radius:10px;background:#fff;min-width:0}
         .pdf-summary-label{font-size:7.8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8b877e;margin-bottom:4px}
         .pdf-summary-value{font-size:10.5px;font-weight:600;line-height:1.35;overflow-wrap:anywhere}
@@ -330,12 +333,12 @@
         .pdf-section-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin:0 0 8px;padding-bottom:7px;border-bottom:1px solid #ddd9d0;break-after:avoid;page-break-after:avoid}
         .pdf-eyebrow{color:#d97757;font-size:7.8px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;margin-bottom:2px}
         .pdf-section h2{margin:0;font-size:16px;line-height:1.15;font-weight:650;letter-spacing:-.025em}
-        .pdf-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+        .pdf-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;width:100%;min-width:0}
         .pdf-field{padding:9px 10px 10px;border:1px solid #e0ddd5;border-radius:9px;background:#fff;min-width:0;break-inside:avoid;page-break-inside:avoid}
         .pdf-field-wide{grid-column:1/-1}
-        .pdf-field-long{break-inside:auto;page-break-inside:auto}
+        .pdf-field-long{break-inside:avoid;page-break-inside:avoid}
         .pdf-label{margin-bottom:4px;color:#8a867e;font-size:7.8px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
-        .pdf-value{color:#24231f;font-size:10.7px;line-height:1.48;font-weight:450;overflow-wrap:anywhere;white-space:normal}
+        .pdf-value{color:#24231f;font-size:10.7px;line-height:1.48;font-weight:450;overflow-wrap:anywhere;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;orphans:3;widows:3}
         .pdf-note{margin-top:4px;padding:12px 13px;border:1px solid #ead0c6;border-radius:10px;background:#fbf0ec;color:#6f4a3e;font-size:9.5px;line-height:1.45;break-inside:avoid;page-break-inside:avoid}
         .pdf-note strong{color:#9a4f37}
       </style>
@@ -425,7 +428,7 @@
         .replace(/[^a-z0-9_-]+/gi, "_");
 
       const options = {
-        margin: [10, 10, 15, 10],
+        margin: [10, 12, 14, 12],
         filename: `${safeName}_${safeReference}_Application.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {
@@ -435,10 +438,14 @@
           logging: false,
           scrollX: 0,
           scrollY: 0,
-          windowWidth: 1200
+          windowWidth: Math.max(900, node.scrollWidth + 40),
+          width: node.scrollWidth
         },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait", compress: true },
-        pagebreak: { mode: ["css", "legacy"] },
+        pagebreak: {
+          mode: ["css", "legacy"],
+          avoid: [".pdf-field", ".pdf-summary-card", ".pdf-section-head", ".pdf-note"]
+        },
         enableLinks: true
       };
 
