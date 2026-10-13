@@ -1,23 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
 
 /*
-  Claude wordmark-inspired typography — global site treatment.
+  Claude lockup-inspired typography — global site treatment.
 
-  The exact Claude / Anthropic Serif wordmark face is a proprietary brand font.
-  Fraunces is used here as a public web-font alternative because its optical-size
-  serif construction is much closer to the supplied Claude Code lockup than the
-  previous Newsreader fallback.
+  The supplied Claude Code SVG stores the lettering as vector outlines rather
+  than an embedded font file/name. Lora is used as the closest practical public
+  web-font match while keeping the whole site in one consistent serif system.
 */
 
 :root{
-  --claude-wordmark-font:"Anthropic Serif","Fraunces","Tiempos Headline","Tiempos Text",Georgia,"Times New Roman",serif;
+  --claude-wordmark-font:"Lora","Tiempos Text",Georgia,"Times New Roman",serif;
 }
 
-/*
-  One typography system for the whole experience: body copy, navigation, buttons,
-  forms, cards, modal UI, labels, counters and mobile controls all inherit the
-  same Claude-like serif family.
-*/
+/* One typography system across the entire website and application UI. */
 html,
 body,
 body *,
@@ -31,7 +26,6 @@ option,
 label,
 summary{
   font-family:var(--claude-wordmark-font)!important;
-  font-optical-sizing:auto;
   font-synthesis:none;
 }
 
@@ -40,7 +34,7 @@ textarea::placeholder{
   font-family:var(--claude-wordmark-font)!important;
 }
 
-/* Claude Code lockup-like display rhythm. */
+/* Display rhythm inspired by the supplied Claude Code lockup. */
 h1,h2,h3,h4,h5,h6,
 .brand-copy strong,
 .mobile-menu-brand strong,
@@ -88,7 +82,7 @@ h1,h2,h3,h4,h5,h6,
   letter-spacing:-.04em!important;
 }
 
-/* Keep smaller UI copy readable without switching to another font family. */
+/* Keep smaller UI copy readable without switching family. */
 p,li,a,button,input,select,textarea,label,summary,
 .btn,.nav-links a,.team-filter,.role-apply,.community-link,
 .theme-toggle,.mobile-menu-nav a,.mobile-menu-theme,.mobile-menu-apply,
