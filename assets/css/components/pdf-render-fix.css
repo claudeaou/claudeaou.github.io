@@ -1,9 +1,8 @@
 /*
-  PDF render hotfix.
-  html2pdf/html2canvas clones the source node before rasterizing it. Fixed or
-  extremely off-screen positioning can result in a valid but blank canvas.
-  Keep the temporary application sheet in normal document geometry while the
-  recruitment modal remains visually above it.
+  PDF render hardening.
+  Keep the temporary application sheet inside a conservative A4-safe width so
+  html2canvas/html2pdf cannot crop the right edge. The modal remains visually
+  above the temporary source while the PDF is rendered.
 */
 
 .cbc-application-pdf{
@@ -13,10 +12,13 @@
   right:auto!important;
   bottom:auto!important;
   display:block!important;
-  width:190mm!important;
-  max-width:none!important;
+  width:176mm!important;
+  max-width:176mm!important;
+  min-width:0!important;
   height:auto!important;
   min-height:1px!important;
+  margin:0 auto!important;
+  padding:0!important;
   z-index:auto!important;
   visibility:visible!important;
   opacity:1!important;
@@ -28,16 +30,48 @@
   contain:none!important;
 }
 
+.cbc-application-pdf,
+.cbc-application-pdf *{
+  box-sizing:border-box!important;
+  max-width:100%;
+  animation:none!important;
+  transition:none!important;
+  filter:none!important;
+}
+
+.cbc-application-pdf .pdf-grid,
+.cbc-application-pdf .pdf-summary{
+  min-width:0!important;
+  width:100%!important;
+}
+
+.cbc-application-pdf .pdf-field,
+.cbc-application-pdf .pdf-summary-card{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  break-inside:avoid!important;
+  page-break-inside:avoid!important;
+}
+
+.cbc-application-pdf .pdf-value,
+.cbc-application-pdf .pdf-summary-value{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  white-space:pre-wrap!important;
+}
+
+.cbc-application-pdf .pdf-section-head,
+.cbc-application-pdf .pdf-note{
+  break-inside:avoid!important;
+  page-break-inside:avoid!important;
+}
+
 /* The modal hides the temporary source sheet from the applicant while it is
    rendered, without making the source itself invisible to html2canvas. */
 .modal{
   position:fixed!important;
   z-index:10000!important;
-}
-
-.cbc-application-pdf,
-.cbc-application-pdf *{
-  animation:none!important;
-  transition:none!important;
-  filter:none!important;
 }
