@@ -12,7 +12,10 @@
   --claude-wordmark-font:"Lora","Tiempos Text",Georgia,"Times New Roman",serif;
 }
 
-/* One typography system across the entire website and application UI. */
+/*
+  Make the serif character visible everywhere — not only in display headings.
+  Regular text intentionally stays light and editorial, like the reference copy.
+*/
 html,
 body,
 body *,
@@ -27,14 +30,22 @@ label,
 summary{
   font-family:var(--claude-wordmark-font)!important;
   font-synthesis:none;
+  font-kerning:normal;
+  text-rendering:optimizeLegibility;
+}
+
+body{
+  font-weight:400!important;
+  letter-spacing:-.006em;
 }
 
 input::placeholder,
 textarea::placeholder{
   font-family:var(--claude-wordmark-font)!important;
+  font-weight:400!important;
 }
 
-/* Display rhythm inspired by the supplied Claude Code lockup. */
+/* Large display type remains confident but still in the same serif family. */
 h1,h2,h3,h4,h5,h6,
 .brand-copy strong,
 .mobile-menu-brand strong,
@@ -52,24 +63,25 @@ h1,h2,h3,h4,h5,h6,
 .form-page h3,
 .modal-head h2,
 .stats strong{
-  font-weight:600!important;
-  letter-spacing:-.035em!important;
-}
-
-.brand-copy strong,
-.mobile-menu-brand strong{
-  font-weight:600!important;
-  letter-spacing:-.03em!important;
-}
-
-.hero-club-name{
+  font-family:var(--claude-wordmark-font)!important;
   font-weight:500!important;
-  letter-spacing:-.03em!important;
+  letter-spacing:-.028em!important;
 }
 
 .hero h1{
   font-weight:600!important;
-  letter-spacing:-.05em!important;
+  letter-spacing:-.045em!important;
+}
+
+.brand-copy strong,
+.mobile-menu-brand strong{
+  font-weight:500!important;
+  letter-spacing:-.022em!important;
+}
+
+.hero-club-name{
+  font-weight:500!important;
+  letter-spacing:-.022em!important;
 }
 
 .section-head h2,
@@ -79,33 +91,114 @@ h1,h2,h3,h4,h5,h6,
 .cta h2,
 .hero-panel h2,
 .success h3{
-  letter-spacing:-.04em!important;
+  letter-spacing:-.032em!important;
 }
 
-/* Keep smaller UI copy readable without switching family. */
-p,li,a,button,input,select,textarea,label,summary,
-.btn,.nav-links a,.team-filter,.role-apply,.community-link,
-.theme-toggle,.mobile-menu-nav a,.mobile-menu-theme,.mobile-menu-apply,
-.dock-apply,.hero-status,.eyebrow,.panel-kicker,.community-kicker,
-.cta-copy-eyebrow,.success-kicker,.role small,.value-index,
-.preference-number,.stats span,.draft-status,.brief-foot{
-  font-weight:500!important;
-}
-
-p,li,.lead,.value-card p,.role p,.section-head p,.values-head p,
-.steps p,.faq-list details p,.community-card p,.cta p,.success-lead,
-.success-next p,.form-page>p,.hero-panel li{
+/*
+  Use the same elegant regular serif much more aggressively through body copy,
+  cards, FAQs, form help, summaries and descriptive UI text.
+*/
+p,
+li,
+.lead,
+.value-card p,
+.role p,
+.section-head p,
+.values-head p,
+.steps p,
+.faq-list details p,
+.community-card p,
+.cta p,
+.success-lead,
+.success-next p,
+.form-page>p,
+.form-page .field-help,
+.form-page .hint,
+.hero-panel li,
+.success-summary,
+.application-summary,
+.review-copy,
+.review-value,
+.modal-card p,
+.modal-card li{
+  font-family:var(--claude-wordmark-font)!important;
   font-weight:400!important;
-  letter-spacing:-.01em!important;
+  letter-spacing:-.006em!important;
 }
 
-.eyebrow,.panel-kicker,.community-kicker,.cta-copy-eyebrow,.success-kicker,
-.role small,.value-index,.preference-number,.stats span,.success-summary span,
-.draft-status{
-  letter-spacing:.025em!important;
+/* Navigation/actions stay readable, but remain visibly serif instead of UI-sans. */
+a,
+button,
+input,
+select,
+textarea,
+label,
+summary,
+.btn,
+.nav-links a,
+.team-filter,
+.role-apply,
+.community-link,
+.theme-toggle,
+.mobile-menu-nav a,
+.mobile-menu-theme,
+.mobile-menu-apply,
+.dock-apply{
+  font-family:var(--claude-wordmark-font)!important;
+  font-weight:500!important;
+  letter-spacing:-.012em!important;
+}
+
+/* Form answers themselves should look like the same editorial body type. */
+input,
+select,
+textarea,
+option{
+  font-weight:400!important;
+  letter-spacing:-.004em!important;
+}
+
+/* Small supporting copy keeps serif character without becoming heavy. */
+.hero-status,
+.eyebrow,
+.panel-kicker,
+.community-kicker,
+.cta-copy-eyebrow,
+.success-kicker,
+.role small,
+.value-index,
+.preference-number,
+.stats span,
+.draft-status,
+.brief-foot,
+.success-summary span{
+  font-family:var(--claude-wordmark-font)!important;
+  font-weight:500!important;
+  letter-spacing:.015em!important;
+}
+
+/* The long editorial lines are where the reference font character reads best. */
+.lead,
+.section-head p,
+.values-head p,
+.community-card p,
+.faq-list details p,
+.hero-panel li,
+.form-page>p{
+  line-height:1.7!important;
 }
 
 @media(max-width:620px){
-  .hero h1{letter-spacing:-.045em!important}
-  .brand-copy strong{letter-spacing:-.025em!important}
+  .hero h1{letter-spacing:-.04em!important}
+  .brand-copy strong{letter-spacing:-.02em!important}
+
+  .lead,
+  .section-head p,
+  .values-head p,
+  .community-card p,
+  .faq-list details p,
+  .hero-panel li,
+  .form-page>p{
+    line-height:1.65!important;
+  }
 }
