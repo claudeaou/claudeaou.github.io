@@ -1,0 +1,69 @@
+name: One-time source migration
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/migrate-source.yml
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout destination
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Clone current recruitment source
+        run: git clone --depth 1 https://github.com/mhmdwaelanwr/hiring-cbc.git /tmp/hiring-cbc
+
+      - name: Copy source into organization site
+        shell: bash
+        run: |
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/workflows/' \
+            /tmp/hiring-cbc/ ./
+
+      - name: Switch production URLs to claudeaou.github.io
+        shell: python
+        run: |
+          from pathlib import Path
+
+          old_site = "https://mhmdwaelanwr.github.io/hiring-cbc/"
+          old_form = "https://mhmdwaelanwr.github.io/form/"
+          old_origin = "https://mhmdwaelanwr.github.io"
+          new_site = "https://claudeaou.github.io/"
+          new_origin = "https://claudeaou.github.io"
+          text_suffixes = {".html", ".css", ".js", ".md", ".json", ".gs", ".yml", ".yaml", ".txt"}
+
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              if path.suffix.lower() not in text_suffixes and path.name not in {'.nojekyll'}:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              updated = text.replace(old_site, new_site).replace(old_form, new_site).replace(old_origin, new_origin)
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+
+      - name: Commit migrated site
+        shell: bash
+        run: |
+          git config user.name "Claude AOU Migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to migrate."
+            exit 0
+          fi
+          git commit -m "Migrate recruitment site into Claude AOU organization"
+          git push origin main
