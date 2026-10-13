@@ -38,7 +38,7 @@ jobs:
           start = text.index(start_marker)
           end = text.index(end_marker, start)
 
-          replacement = r'''  async function submitVerified() {
+          replacement = r"""  async function submitVerified() {
             if (!recruitmentOpen()) {
               alert("Applications are not open.");
               return;
@@ -142,7 +142,7 @@ jobs:
               finishWithError("We could not send your application. Your draft is saved on this device—please check your connection and try again.");
             }
           }
-'''
+          """
 
           text = text[:start] + replacement + text[end:]
           path.write_text(text, encoding="utf-8")
