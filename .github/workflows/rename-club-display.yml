@@ -39,7 +39,6 @@ jobs:
                   path.write_text(updated, encoding='utf-8')
                   changed.append(str(path))
 
-          # Force fresh browser copies of JS files whose user-facing text changed.
           index = Path('index.html')
           if index.exists():
               text = index.read_text(encoding='utf-8')
@@ -55,7 +54,7 @@ jobs:
         run: |
           git config user.name "Claude AOU Release"
           git config user.email "actions@users.noreply.github.com"
+          git rm -f .github/workflows/rename-club-display.yml
           git add -A
-          git rm .github/workflows/rename-club-display.yml
           git commit -m "Rename club display to Claude Builder Club @ AOU Egypt"
           git push origin main
