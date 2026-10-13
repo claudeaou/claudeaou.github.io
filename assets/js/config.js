@@ -21,7 +21,8 @@ window.CLUB_CONFIG = {
   [
     ["./assets/js/ui-polish.js?v=20261013selectstable2", "cbc-ui-polish"],
     ["./assets/js/form-quality.js?v=20261013quality1", "cbc-form-quality"],
-    ["./assets/js/select-enhancer.js?v=20261013selectstable2", "cbc-select-enhancer"]
+    ["./assets/js/select-enhancer.js?v=20261013selectstable2", "cbc-select-enhancer"],
+    ["./assets/js/mobile-theme-quick.js?v=20261013theme2", "cbc-mobile-theme-quick"]
   ].forEach(([src, marker]) => {
     if (document.querySelector(`script[data-module="${marker}"]`)) return;
     const script = document.createElement("script");
