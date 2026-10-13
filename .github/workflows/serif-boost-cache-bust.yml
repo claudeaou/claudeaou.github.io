@@ -1,0 +1,38 @@
+name: Serif typography cache bust
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/serif-boost-cache-bust.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Force fresh site stylesheet
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('site.css?v=20261013font1', 'site.css?v=20261013font2')
+          path.write_text(text, encoding='utf-8')
+
+      - name: Publish cache bust and remove one-time workflow
+        shell: bash
+        run: |
+          git config user.name "Claude AOU Release"
+          git config user.email "actions@users.noreply.github.com"
+          git rm -f .github/workflows/serif-boost-cache-bust.yml
+          git add -A
+          git commit -m "Force fresh serif typography across site"
+          git push origin main
