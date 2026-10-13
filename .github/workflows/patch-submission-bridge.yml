@@ -14,31 +14,39 @@ jobs:
   patch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Patch submission transport for organization domain
-        shell: python
+      - name: Patch verified submission transport
+        shell: bash
         run: |
+          python3 - <<'PY'
           from pathlib import Path
 
-          path = Path("assets/js/submission-hotfix.js")
-          text = path.read_text(encoding="utf-8")
+          path = Path('assets/js/submission-hotfix.js')
+          text = path.read_text(encoding='utf-8')
 
-          text = text.replace(
-              '  const OFFICIAL_ORIGIN = "https://claudeaou.github.io";\n',
-              '  const OFFICIAL_ORIGIN = "https://claudeaou.github.io";\n'
-              '  const BRIDGE_ORIGIN = "https://mhmdwaelanwr.github.io";\n'
-              '  const BRIDGE_URL = `${BRIDGE_ORIGIN}/hiring-cbc/bridge.html`;\n'
+          origin_line = '  const OFFICIAL_ORIGIN = "https://claudeaou.github.io";\n'
+          bridge_lines = (
+              origin_line
+              + '  const BRIDGE_ORIGIN = "https://mhmdwaelanwr.github.io";\n'
+              + '  const BRIDGE_URL = `${BRIDGE_ORIGIN}/hiring-cbc/bridge.html`;\n'
           )
+          if 'const BRIDGE_ORIGIN' not in text:
+              if origin_line not in text:
+                  raise SystemExit('OFFICIAL_ORIGIN marker not found')
+              text = text.replace(origin_line, bridge_lines, 1)
 
-          start_marker = "  async function submitVerified() {"
-          end_marker = "\n  /*\n    Capture only the final Submit click"
-          start = text.index(start_marker)
-          end = text.index(end_marker, start)
+          start_marker = '  async function submitVerified() {'
+          end_marker = '\n  /*\n    Capture only the final Submit click'
+          start = text.find(start_marker)
+          end = text.find(end_marker, start)
+          if start < 0 or end < 0:
+              raise SystemExit('submitVerified markers not found')
 
-          replacement = r"""  async function submitVerified() {
+          replacement = '''  async function submitVerified() {
             if (!recruitmentOpen()) {
               alert("Applications are not open.");
               return;
@@ -128,7 +136,7 @@ jobs:
               window.addEventListener("message", onMessage);
 
               bridge = document.createElement("iframe");
-              bridge.src = `${BRIDGE_URL}?v=20261013org1`;
+              bridge.src = `${BRIDGE_URL}?v=20261013org2`;
               bridge.hidden = true;
               bridge.setAttribute("aria-hidden", "true");
               bridge.addEventListener("load", () => setTimeout(sendToBridge, 0), { once: true });
@@ -142,12 +150,13 @@ jobs:
               finishWithError("We could not send your application. Your draft is saved on this device—please check your connection and try again.");
             }
           }
-          """
+          '''
 
           text = text[:start] + replacement + text[end:]
-          path.write_text(text, encoding="utf-8")
+          path.write_text(text, encoding='utf-8')
+          PY
 
-      - name: Validate JavaScript syntax
+      - name: Validate JavaScript
         run: node --check assets/js/submission-hotfix.js
 
       - name: Commit patch
@@ -160,5 +169,5 @@ jobs:
             echo "Nothing to patch."
             exit 0
           fi
-          git commit -m "Verify submissions through legacy Apps Script bridge"
+          git commit -m "Verify submissions through compatibility bridge"
           git push origin main
