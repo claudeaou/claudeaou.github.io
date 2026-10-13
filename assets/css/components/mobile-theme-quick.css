@@ -1,0 +1,125 @@
+/* Mobile header theme shortcuts: follow phone/system theme + force dark mode. */
+.mobile-theme-quick{display:none}
+
+@media(max-width:760px){
+  /* Reserve enough room for System, Dark and the mobile menu button. */
+  .nav .brand{
+    width:calc(100% - 142px)!important;
+    max-width:calc(100% - 142px)!important;
+  }
+
+  .nav .nav-links{
+    width:auto!important;
+    min-width:0!important;
+    height:40px!important;
+    min-height:40px!important;
+    gap:7px!important;
+  }
+
+  /* Keep the desktop cycling control out of the phone header. */
+  .nav .theme-toggle{display:none!important;visibility:hidden!important}
+
+  .nav .nav-links > .mobile-theme-quick{
+    display:inline-grid!important;
+    visibility:visible!important;
+    opacity:1!important;
+    place-items:center!important;
+    position:relative!important;
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid var(--line)!important;
+    border-radius:12px!important;
+    background:var(--surface)!important;
+    color:var(--muted)!important;
+    box-shadow:none!important;
+    cursor:pointer!important;
+    transform:none!important;
+    transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease!important;
+  }
+
+  .nav .mobile-theme-quick:hover,
+  .nav .mobile-theme-quick:focus-visible{
+    background:var(--surface-2)!important;
+    border-color:color-mix(in srgb,var(--accent) 28%,var(--line))!important;
+    color:var(--ink)!important;
+  }
+
+  .nav .mobile-theme-quick:focus-visible{
+    outline:none!important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)!important;
+  }
+
+  .nav .mobile-theme-quick[aria-pressed="true"]{
+    color:var(--accent)!important;
+    border-color:color-mix(in srgb,var(--accent) 58%,var(--line))!important;
+    background:color-mix(in srgb,var(--accent) 10%,var(--surface))!important;
+  }
+
+  html[data-theme="dark"] .nav .mobile-theme-quick{
+    background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
+  }
+
+  html[data-theme="dark"] .nav .mobile-theme-quick[aria-pressed="true"]{
+    color:#f0a07f!important;
+    border-color:color-mix(in srgb,#f0a07f 56%,var(--line))!important;
+    background:color-mix(in srgb,#f0a07f 10%,var(--surface))!important;
+  }
+
+  .mobile-theme-quick svg{
+    width:20px!important;
+    height:20px!important;
+    display:block!important;
+    fill:none!important;
+    stroke:currentColor!important;
+    stroke-width:1.9!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+    pointer-events:none!important;
+  }
+
+  .mobile-theme-dark svg{width:19px!important;height:19px!important}
+}
+
+@media(max-width:420px){
+  .nav .brand{
+    width:calc(100% - 134px)!important;
+    max-width:calc(100% - 134px)!important;
+  }
+
+  .nav .nav-links{height:38px!important;min-height:38px!important;gap:6px!important}
+
+  .nav .nav-links > .mobile-theme-quick{
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    min-height:38px!important;
+    border-radius:11px!important;
+  }
+}
+
+@media(max-width:360px){
+  .nav .brand{
+    width:calc(100% - 124px)!important;
+    max-width:calc(100% - 124px)!important;
+  }
+
+  .nav .nav-links{height:36px!important;min-height:36px!important;gap:5px!important}
+
+  .nav .nav-links > .mobile-theme-quick{
+    width:36px!important;
+    height:36px!important;
+    min-width:36px!important;
+    min-height:36px!important;
+    border-radius:10px!important;
+  }
+
+  .nav .mobile-menu-toggle{
+    width:36px!important;
+    height:36px!important;
+    min-width:36px!important;
+  }
+}
