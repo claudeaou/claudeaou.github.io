@@ -1,0 +1,142 @@
+/* Desktop navigation geometry.
+   Keep the four primary section links visually centered while the social/theme/
+   application controls stay pinned to the far right. This layer intentionally
+   avoids HTML/JS changes so the mobile menu and application interactions remain
+   untouched. */
+
+@media (min-width:1181px){
+  .nav-inner{
+    position:relative!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+  }
+
+  .nav .brand{
+    position:relative!important;
+    z-index:3!important;
+    flex:0 0 auto!important;
+  }
+
+  .nav-links{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:72px!important;
+    min-height:72px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:8px!important;
+    margin:0!important;
+    padding:0!important;
+    pointer-events:none!important;
+  }
+
+  .nav-links>*{pointer-events:auto!important}
+
+  /* Primary navigation: compact, symmetric positions around the true center. */
+  .nav-links>a[href="#about"],
+  .nav-links>a[href="#teams"],
+  .nav-links>a[href="#process"],
+  .nav-links>a[href="#community"]{
+    position:absolute!important;
+    top:50%!important;
+    width:auto!important;
+    min-width:0!important;
+    min-height:40px!important;
+    margin:0!important;
+    padding:0 7px!important;
+    justify-content:center!important;
+    white-space:nowrap!important;
+    transform:translate(-50%,-50%)!important;
+    z-index:2!important;
+  }
+
+  .nav-links>a[href="#about"]{left:calc(50% - 150px)!important}
+  .nav-links>a[href="#teams"]{left:calc(50% - 52px)!important}
+  .nav-links>a[href="#process"]{left:calc(50% + 51px)!important}
+  .nav-links>a[href="#community"]{left:calc(50% + 166px)!important}
+
+  /* Right cluster: keep its footprint intentionally compact so it can never
+     collide with the centered navigation at normal desktop widths. */
+  .nav-facebook,
+  .nav-whatsapp{
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0 13px!important;
+    gap:8px!important;
+    margin:0!important;
+    flex:0 0 auto!important;
+    white-space:nowrap!important;
+    font-size:13px!important;
+  }
+
+  .nav-facebook::before,
+  .nav-whatsapp::before{
+    width:19px!important;
+    height:19px!important;
+    flex:0 0 19px!important;
+  }
+
+  .theme-toggle{
+    width:auto!important;
+    min-width:108px!important;
+    max-width:none!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0 13px!important;
+    gap:8px!important;
+    flex:0 0 auto!important;
+    font-size:13px!important;
+  }
+
+  .nav-apply{
+    width:auto!important;
+    min-width:82px!important;
+    max-width:none!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0 17px!important;
+    margin:0!important;
+    flex:0 0 auto!important;
+    font-size:13px!important;
+  }
+}
+
+/* Medium desktop / small laptop: preserve every control but collapse the
+   three verbose labels to icon-only controls before any overlap can happen. */
+@media (min-width:1181px) and (max-width:1439px){
+  .nav-facebook,
+  .nav-whatsapp{
+    width:44px!important;
+    min-width:44px!important;
+    padding:0!important;
+    gap:0!important;
+  }
+
+  .nav-facebook>span,
+  .nav-whatsapp>span,
+  .theme-toggle .theme-label{
+    display:none!important;
+  }
+
+  .theme-toggle{
+    width:44px!important;
+    min-width:44px!important;
+    padding:0!important;
+    gap:0!important;
+    justify-content:center!important;
+  }
+
+  .nav-links>a[href="#about"]{left:calc(50% - 138px)!important}
+  .nav-links>a[href="#teams"]{left:calc(50% - 47px)!important}
+  .nav-links>a[href="#process"]{left:calc(50% + 47px)!important}
+  .nav-links>a[href="#community"]{left:calc(50% + 150px)!important}
+}
+
+/* Keep the existing <=1180 responsive/mobile behavior owned by the other
+   dedicated navigation files. */

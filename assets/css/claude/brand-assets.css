@@ -1,0 +1,154 @@
+/* Official Claude asset pack integration.
+   Source assets are the uploaded Claude logo pack under assets/brand/Claude logos/.
+   Canonical aliases live in assets/brand/logos/. */
+
+:root{
+  --claude-official-spark:url("../../brand/logos/claude-spark.svg");
+  --claude-official-icon:url("../../brand/logos/claude-icon-rounded.svg");
+  --claude-official-wordmark:url("../../brand/logos/claude-wordmark-slate.svg");
+}
+
+html[data-theme="dark"]{
+  --claude-official-wordmark:url("../../brand/logos/claude-wordmark-ivory.svg");
+}
+
+/* Claude's small UI identity is the Clay Spark, not an empty orange tile. */
+.brand::before,
+html[data-theme="dark"] .brand::before,
+.mobile-menu-mark,
+.modal-head::before{
+  content:""!important;
+  display:block!important;
+  background-color:transparent!important;
+  background-image:var(--claude-official-spark)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  opacity:1!important;
+}
+
+.brand::before{
+  width:30px!important;
+  height:30px!important;
+  flex:0 0 30px!important;
+}
+
+.brand{
+  gap:11px!important;
+}
+
+.mobile-menu-mark{
+  width:30px!important;
+  height:30px!important;
+  flex:0 0 30px!important;
+}
+
+.modal-head::before{
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  align-self:center!important;
+}
+
+/* Spark accent elsewhere. */
+.hero-club-name::before{
+  content:""!important;
+  display:block!important;
+  background-color:transparent!important;
+  background-image:var(--claude-official-spark)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  width:23px!important;
+  height:23px!important;
+  flex:0 0 23px!important;
+}
+
+.brief-mark{
+  width:34px!important;
+  height:34px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  display:grid!important;
+  place-items:center!important;
+}
+
+.brief-mark img{
+  display:block!important;
+  width:30px!important;
+  height:30px!important;
+  object-fit:contain!important;
+}
+
+.community-card::before{
+  background-color:transparent!important;
+  background-image:var(--claude-official-spark)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+}
+
+/* Real uploaded Claude wordmark in the mission brief. */
+.brief-top>div:last-child>span{
+  display:block!important;
+  width:112px!important;
+  height:27px!important;
+  margin:0!important;
+  font-size:0!important;
+  line-height:0!important;
+  background-color:transparent!important;
+  background-image:var(--claude-official-wordmark)!important;
+  background-repeat:no-repeat!important;
+  background-position:left center!important;
+  background-size:contain!important;
+}
+
+.brief-top>div:last-child>strong{
+  display:block!important;
+  margin-top:3px!important;
+}
+
+/* Keep the package wordmark subtle and never let it collide with content. */
+.hero-panel.hero-brief::after{
+  content:""!important;
+  position:absolute!important;
+  right:24px!important;
+  bottom:18px!important;
+  top:auto!important;
+  width:118px!important;
+  height:32px!important;
+  opacity:.045!important;
+  background-color:transparent!important;
+  background-image:var(--claude-official-wordmark)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  pointer-events:none!important;
+  transform:none!important;
+}
+
+@media(max-width:760px){
+  .brand::before{
+    width:27px!important;
+    height:27px!important;
+    flex-basis:27px!important;
+  }
+  .brand{gap:9px!important}
+  .modal-head::before{
+    width:30px!important;
+    height:30px!important;
+  }
+  .brief-top>div:last-child>span{
+    width:98px!important;
+    height:24px!important;
+  }
+}

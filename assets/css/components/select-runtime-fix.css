@@ -1,0 +1,78 @@
+/*
+  Native select compatibility - final pass.
+  Chromium/Linux can render an abnormally narrow popup when a styled select uses
+  appearance:none. Restore the platform menulist on every device so the opened
+  menu inherits the real control width and remains keyboard/accessibility safe.
+*/
+
+#applicationForm select{
+  appearance:auto!important;
+  -webkit-appearance:menulist!important;
+  -moz-appearance:menulist!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  background-image:none!important;
+  padding-right:13px!important;
+  color-scheme:light!important;
+  isolation:isolate!important;
+  background-clip:padding-box!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+#applicationForm select option,
+#applicationForm select optgroup,
+html[data-theme="dark"] #applicationForm select option,
+html[data-theme="dark"] #applicationForm select optgroup{
+  color:#141413!important;
+  background:#ffffff!important;
+  -webkit-text-fill-color:#141413!important;
+  font:inherit!important;
+}
+
+#applicationForm select option:checked{
+  color:#141413!important;
+  background:#e8e6dc!important;
+  -webkit-text-fill-color:#141413!important;
+}
+
+#applicationForm select option:disabled,
+html[data-theme="dark"] #applicationForm select option:disabled{
+  color:#8d8981!important;
+  background:#ffffff!important;
+  -webkit-text-fill-color:#8d8981!important;
+}
+
+/* The closed control can stay dark while Chromium renders the popup with a
+   predictable readable palette. */
+html[data-theme="dark"] #applicationForm select{
+  color:var(--form-light)!important;
+  -webkit-text-fill-color:var(--form-light)!important;
+  color-scheme:light!important;
+}
+
+html[data-theme="dark"] #applicationForm select:required:invalid{
+  color:var(--form-mid)!important;
+  -webkit-text-fill-color:var(--form-mid)!important;
+}
+
+#applicationForm select:disabled{
+  cursor:not-allowed!important;
+  filter:saturate(.72)!important;
+}
+
+/* Touch devices use their native picker presentation. */
+@media(max-width:760px), (pointer:coarse){
+  #applicationForm select{
+    appearance:auto!important;
+    -webkit-appearance:menulist!important;
+    background-image:none!important;
+    padding-right:13px!important;
+    font-size:16px!important;
+  }
+
+  html[data-theme="dark"] #applicationForm select{
+    color-scheme:dark!important;
+  }
+}

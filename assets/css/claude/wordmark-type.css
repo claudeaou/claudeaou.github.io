@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&display=swap');
+
+/*
+  Claude wordmark-inspired typography — global site treatment.
+
+  The exact Claude / Anthropic Serif wordmark face is a proprietary brand font.
+  Fraunces is used here as a public web-font alternative because its optical-size
+  serif construction is much closer to the supplied Claude Code lockup than the
+  previous Newsreader fallback.
+*/
+
+:root{
+  --claude-wordmark-font:"Anthropic Serif","Fraunces","Tiempos Headline","Tiempos Text",Georgia,"Times New Roman",serif;
+}
+
+/*
+  One typography system for the whole experience: body copy, navigation, buttons,
+  forms, cards, modal UI, labels, counters and mobile controls all inherit the
+  same Claude-like serif family.
+*/
+html,
+body,
+body *,
+body *::before,
+body *::after,
+button,
+input,
+select,
+textarea,
+option,
+label,
+summary{
+  font-family:var(--claude-wordmark-font)!important;
+  font-optical-sizing:auto;
+  font-synthesis:none;
+}
+
+input::placeholder,
+textarea::placeholder{
+  font-family:var(--claude-wordmark-font)!important;
+}
+
+/* Claude Code lockup-like display rhythm. */
+h1,h2,h3,h4,h5,h6,
+.brand-copy strong,
+.mobile-menu-brand strong,
+.hero-club-name,
+.hero-panel h2,
+.section-head h2,
+.values-head h2,
+.faq-intro h2,
+.community-card h2,
+.cta h2,
+.success h3,
+.role h3,
+.value-card h3,
+.steps h3,
+.form-page h3,
+.modal-head h2,
+.stats strong{
+  font-weight:600!important;
+  letter-spacing:-.035em!important;
+}
+
+.brand-copy strong,
+.mobile-menu-brand strong{
+  font-weight:600!important;
+  letter-spacing:-.03em!important;
+}
+
+.hero-club-name{
+  font-weight:500!important;
+  letter-spacing:-.03em!important;
+}
+
+.hero h1{
+  font-weight:600!important;
+  letter-spacing:-.05em!important;
+}
+
+.section-head h2,
+.values-head h2,
+.faq-intro h2,
+.community-card h2,
+.cta h2,
+.hero-panel h2,
+.success h3{
+  letter-spacing:-.04em!important;
+}
+
+/* Keep smaller UI copy readable without switching to another font family. */
+p,li,a,button,input,select,textarea,label,summary,
+.btn,.nav-links a,.team-filter,.role-apply,.community-link,
+.theme-toggle,.mobile-menu-nav a,.mobile-menu-theme,.mobile-menu-apply,
+.dock-apply,.hero-status,.eyebrow,.panel-kicker,.community-kicker,
+.cta-copy-eyebrow,.success-kicker,.role small,.value-index,
+.preference-number,.stats span,.draft-status,.brief-foot{
+  font-weight:500!important;
+}
+
+p,li,.lead,.value-card p,.role p,.section-head p,.values-head p,
+.steps p,.faq-list details p,.community-card p,.cta p,.success-lead,
+.success-next p,.form-page>p,.hero-panel li{
+  font-weight:400!important;
+  letter-spacing:-.01em!important;
+}
+
+.eyebrow,.panel-kicker,.community-kicker,.cta-copy-eyebrow,.success-kicker,
+.role small,.value-index,.preference-number,.stats span,.success-summary span,
+.draft-status{
+  letter-spacing:.025em!important;
+}
+
+@media(max-width:620px){
+  .hero h1{letter-spacing:-.045em!important}
+  .brand-copy strong{letter-spacing:-.025em!important}
+}

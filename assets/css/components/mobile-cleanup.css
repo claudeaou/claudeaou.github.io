@@ -1,0 +1,69 @@
+/* Final cleanup for mobile spacing. */
+
+@media (max-width:760px){
+  /*
+    The mobile hardening layer reserves space at the bottom of <body> for the
+    floating dock. The dock is hidden as soon as the footer enters the viewport,
+    so keeping that reservation at the end of the page creates a large empty
+    tail under the footer. Let the page end naturally instead.
+  */
+  body{
+    padding-bottom:0!important;
+  }
+
+  /* Keep the footer compact and content-sized on phones. */
+  .footer{
+    min-height:0!important;
+    height:auto!important;
+    margin-bottom:0!important;
+    padding-top:22px!important;
+    padding-bottom:20px!important;
+    gap:14px!important;
+    align-items:flex-start!important;
+    align-content:start!important;
+  }
+
+  .footer>div:first-child,
+  .footer-meta-line,
+  .footer-social{
+    margin:0!important;
+  }
+
+  .footer-meta-line{gap:6px!important}
+
+  .footer-social{
+    width:100%!important;
+    gap:8px!important;
+  }
+
+  .footer-social a[href^="mailto:"]{
+    width:100%!important;
+    min-height:42px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:0 12px!important;
+    border:1px solid var(--line-strong,var(--line))!important;
+    border-radius:12px!important;
+    text-align:center!important;
+    overflow-wrap:anywhere!important;
+  }
+
+  /* Let team cards hug their real content instead of stretching vertically. */
+  .role{
+    min-height:0!important;
+    height:auto!important;
+    padding:18px!important;
+  }
+
+  .role p{margin-bottom:12px!important}
+
+  .role ul{
+    margin:0 0 14px!important;
+    gap:6px!important;
+  }
+
+  .role-apply{
+    margin-top:6px!important;
+  }
+}
