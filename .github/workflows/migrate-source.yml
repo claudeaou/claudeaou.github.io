@@ -45,6 +45,8 @@ jobs:
           for path in Path('.').rglob('*'):
               if not path.is_file() or '.git' in path.parts:
                   continue
+              if path.parts[:2] == ('.github', 'workflows'):
+                  continue
               if path.suffix.lower() not in text_suffixes and path.name not in {'.nojekyll'}:
                   continue
               try:
@@ -61,6 +63,7 @@ jobs:
           git config user.name "Claude AOU Migration"
           git config user.email "actions@users.noreply.github.com"
           git add -A
+          git reset -- .github/workflows/migrate-source.yml
           if git diff --cached --quiet; then
             echo "Nothing to migrate."
             exit 0
