@@ -11,7 +11,7 @@ window.CLUB_CONFIG = {
   SUBMISSION_ENDPOINT: "https://script.google.com/macros/s/AKfycbzH7s_5RU_h40YDqd57pbPo1jMJ-FOMXtFRvHTFHhLJXQrbvoqf3N3gq1L-VmwTK2i83Q/exec",
 
   // Optional ISO timestamp. Leave blank if applications should stay open manually.
-  APPLICATIONS_CLOSE_AT: "",
+  APPLICATIONS_CLOSE_AT: "2026-10-18T00:00:00+03:00",
 
   // Official club contact email.
   CONTACT_EMAIL: "claudebuilder.aou@gmail.com"
