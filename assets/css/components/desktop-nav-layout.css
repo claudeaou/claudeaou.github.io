@@ -40,12 +40,12 @@
     pointer-events: auto !important;
   }
 
-  /* Primary navigation section links: in-flow and centered in available space */
+  /* Primary navigation section links: in-flow, relative positioning context for individual underline */
   .nav-links > a[href="#about"],
   .nav-links > a[href="#teams"],
   .nav-links > a[href="#process"],
   .nav-links > a[href="#community"] {
-    position: static !important;
+    position: relative !important;
     transform: none !important;
     top: auto !important;
     left: auto !important;
@@ -67,7 +67,7 @@
     text-decoration: none !important;
     border-radius: 8px !important;
     z-index: 2 !important;
-    transition: color .16s ease, background-color .16s ease !important;
+    transition: color .16s ease !important;
   }
 
   .nav-links > a[href="#about"]:hover,
@@ -76,7 +76,30 @@
   .nav-links > a[href="#community"]:hover,
   .nav-links > a[href^="#"].is-active {
     color: var(--ink) !important;
-    background-color: var(--surface-2) !important;
+    background-color: transparent !important;
+  }
+
+  /* Active indicator underline: scoped directly under each word */
+  .nav-links > a[href^="#"]::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 2px !important;
+    top: auto !important;
+    width: auto !important;
+    height: 2px !important;
+    border-radius: 999px !important;
+    background: var(--brand-orange, #d97757) !important;
+    transform: scaleX(0) !important;
+    transform-origin: center !important;
+    transition: transform .18s ease !important;
+    pointer-events: none !important;
+  }
+
+  .nav-links > a[href^="#"]:hover::after,
+  .nav-links > a[href^="#"].is-active::after {
+    transform: scaleX(1) !important;
   }
 
   /* Auto margins cleanly center the 4 section links without absolute positioning */
@@ -107,6 +130,7 @@
     overflow: hidden !important;
     white-space: nowrap !important;
     text-decoration: none !important;
+    position: relative !important;
   }
 
   .nav-facebook > span,
@@ -120,6 +144,12 @@
     height: 18px !important;
     flex: 0 0 18px !important;
     margin: 0 !important;
+  }
+
+  .nav-facebook::after,
+  .nav-whatsapp::after {
+    content: none !important;
+    display: none !important;
   }
 
   .theme-toggle {
@@ -204,4 +234,3 @@
     visibility: hidden !important;
   }
 }
-
