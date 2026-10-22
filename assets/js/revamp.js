@@ -160,7 +160,9 @@
     card.dataset.teamGroup = groupFor(qs('small', card)?.textContent);
     if (qs('.role-apply', card)) return;
     const button = document.createElement('button');
-    button.type = 'button'; button.className = 'role-apply';
+    button.type = 'button'; button.className = 'role-apply js-apply';
+    const isClubOpen = typeof recruitmentOpen === 'function' ? recruitmentOpen() : Boolean(window.CLUB_CONFIG?.REGISTRATION_OPEN);
+    if (!isClubOpen) { button.hidden = true; }
     button.innerHTML = '<span>Apply to this team</span><span aria-hidden="true">→</span>';
     button.setAttribute('aria-label', `Apply to ${title}`);
     button.addEventListener('click', () => {
