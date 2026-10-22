@@ -1,12 +1,12 @@
-/* Mobile header dark-mode shortcut. Only the moon button is shown on phones. */
+/* Mobile header dark-mode shortcut + social icons in mobile navigation bar */
 .mobile-theme-quick{display:none}
 #mobileThemeSystem,.mobile-theme-system{display:none!important;visibility:hidden!important}
 
 @media(max-width:760px){
-  /* Reserve room for Dark + mobile menu only. */
+  /* Reserve room for Socials (FB + WA) + Dark toggle + Mobile menu */
   .nav .brand{
-    width:calc(100% - 96px)!important;
-    max-width:calc(100% - 96px)!important;
+    width:calc(100% - 176px)!important;
+    max-width:calc(100% - 176px)!important;
   }
 
   .nav .nav-links{
@@ -14,12 +14,78 @@
     min-width:0!important;
     height:40px!important;
     min-height:40px!important;
-    gap:7px!important;
+    gap:6px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
   }
 
   /* Desktop cycling control and drawer theme row stay out of the phone UI. */
   .nav .theme-toggle{display:none!important;visibility:hidden!important}
   .mobile-menu-theme{display:none!important}
+
+  /* Phone header social links: Facebook & WhatsApp */
+  .nav .nav-links > .nav-facebook,
+  .nav .nav-links > .nav-whatsapp{
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    width:36px!important;
+    height:36px!important;
+    min-width:36px!important;
+    min-height:36px!important;
+    padding:0!important;
+    margin:0!important;
+    flex:0 0 36px!important;
+    border-radius:11px!important;
+    border:1px solid var(--line)!important;
+    background:var(--surface)!important;
+    color:var(--ink)!important;
+    align-items:center!important;
+    justify-content:center!important;
+    position:relative!important;
+    z-index:20!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    -webkit-tap-highlight-color:transparent!important;
+    text-decoration:none!important;
+    box-shadow:none!important;
+    transform:none!important;
+    transition:background .18s ease,border-color .18s ease,color .18s ease!important;
+  }
+
+  .nav .nav-links > .nav-facebook:hover,
+  .nav .nav-links > .nav-facebook:focus-visible,
+  .nav .nav-links > .nav-whatsapp:hover,
+  .nav .nav-links > .nav-whatsapp:focus-visible{
+    background:var(--surface-2)!important;
+    border-color:color-mix(in srgb,var(--accent) 28%,var(--line))!important;
+    color:var(--ink)!important;
+  }
+
+  .nav .nav-links > .nav-facebook:focus-visible,
+  .nav .nav-links > .nav-whatsapp:focus-visible{
+    outline:none!important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)!important;
+  }
+
+  html[data-theme="dark"] .nav .nav-links > .nav-facebook,
+  html[data-theme="dark"] .nav .nav-links > .nav-whatsapp{
+    background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
+  }
+
+  .nav .nav-links > .nav-facebook::before,
+  .nav .nav-links > .nav-whatsapp::before{
+    width:17px!important;
+    height:17px!important;
+    flex:0 0 17px!important;
+    margin:0!important;
+  }
+
+  .nav .nav-links > .nav-facebook > span,
+  .nav .nav-links > .nav-whatsapp > span{
+    display:none!important;
+  }
 
   .nav .nav-links > .mobile-theme-quick{
     display:inline-grid!important;
@@ -31,14 +97,14 @@
     pointer-events:auto!important;
     touch-action:manipulation!important;
     -webkit-tap-highlight-color:transparent!important;
-    width:40px!important;
-    height:40px!important;
-    min-width:40px!important;
-    min-height:40px!important;
+    width:36px!important;
+    height:36px!important;
+    min-width:36px!important;
+    min-height:36px!important;
     margin:0!important;
     padding:0!important;
     border:1px solid var(--line)!important;
-    border-radius:12px!important;
+    border-radius:11px!important;
     background:var(--surface)!important;
     color:var(--muted)!important;
     box-shadow:none!important;
@@ -82,8 +148,8 @@
   }
 
   .mobile-theme-dark svg{
-    width:19px!important;
-    height:19px!important;
+    width:18px!important;
+    height:18px!important;
     display:block!important;
     fill:none!important;
     stroke:currentColor!important;
@@ -96,40 +162,59 @@
 
 @media(max-width:420px){
   .nav .brand{
-    width:calc(100% - 92px)!important;
-    max-width:calc(100% - 92px)!important;
+    width:calc(100% - 162px)!important;
+    max-width:calc(100% - 162px)!important;
   }
 
-  .nav .nav-links{height:38px!important;min-height:38px!important;gap:6px!important}
+  .nav .nav-links{height:36px!important;min-height:36px!important;gap:5px!important}
 
+  .nav .nav-links > .nav-facebook,
+  .nav .nav-links > .nav-whatsapp,
   .nav .nav-links > .mobile-theme-dark{
-    width:38px!important;
-    height:38px!important;
-    min-width:38px!important;
-    min-height:38px!important;
-    border-radius:11px!important;
+    width:34px!important;
+    height:34px!important;
+    min-width:34px!important;
+    min-height:34px!important;
+    border-radius:10px!important;
+    flex:0 0 34px!important;
+  }
+
+  .nav .mobile-menu-toggle{
+    width:34px!important;
+    height:34px!important;
+    min-width:34px!important;
   }
 }
 
 @media(max-width:360px){
   .nav .brand{
-    width:calc(100% - 86px)!important;
-    max-width:calc(100% - 86px)!important;
+    width:calc(100% - 146px)!important;
+    max-width:calc(100% - 146px)!important;
   }
 
-  .nav .nav-links{height:36px!important;min-height:36px!important;gap:5px!important}
+  .nav .nav-links{height:34px!important;min-height:34px!important;gap:4px!important}
 
+  .nav .nav-links > .nav-facebook,
+  .nav .nav-links > .nav-whatsapp,
   .nav .nav-links > .mobile-theme-dark{
-    width:36px!important;
-    height:36px!important;
-    min-width:36px!important;
-    min-height:36px!important;
-    border-radius:10px!important;
+    width:31px!important;
+    height:31px!important;
+    min-width:31px!important;
+    min-height:31px!important;
+    border-radius:9px!important;
+    flex:0 0 31px!important;
   }
 
   .nav .mobile-menu-toggle{
-    width:36px!important;
-    height:36px!important;
-    min-width:36px!important;
+    width:31px!important;
+    height:31px!important;
+    min-width:31px!important;
+  }
+
+  .nav .nav-links > .nav-facebook::before,
+  .nav .nav-links > .nav-whatsapp::before{
+    width:15px!important;
+    height:15px!important;
+    flex:0 0 15px!important;
   }
 }

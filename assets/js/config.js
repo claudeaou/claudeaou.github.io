@@ -4,22 +4,23 @@
   Runtime configuration stays here. Small presentation/data-quality helpers are
   loaded as isolated modules so the main recruitment transport stays untouched.
 */
+const env = window.ENV || {};
+
 window.CLUB_CONFIG = {
   /*
     Recruitment switch:
     - false = applications are closed
     - true  = applications are open
 
-    This is intentionally kept in the front-end config so reopening/closing
-    recruitment only requires changing this single value.
+    Reads from window.ENV.REGISTRATION_OPEN if defined (env.js), default is true.
   */
-  REGISTRATION_OPEN: false,
+  REGISTRATION_OPEN: env.REGISTRATION_OPEN !== undefined ? env.REGISTRATION_OPEN : true,
 
   // Keep the public site live even while recruitment is closed.
-  IS_LIVE: true,
+  IS_LIVE: env.IS_LIVE !== undefined ? env.IS_LIVE : true,
 
   // Public Google Apps Script Web App endpoint used by the application form.
-  SUBMISSION_ENDPOINT: "https://script.google.com/macros/s/AKfycbzH7s_5RU_h40YDqd57pbPo1jMJ-FOMXtFRvHTFHhLJXQrbvoqf3N3gq1L-VmwTK2i83Q/exec",
+  SUBMISSION_ENDPOINT: env.SUBMISSION_ENDPOINT || "https://script.google.com/macros/s/AKfycbzH7s_5RU_h40YDqd57pbPo1jMJ-FOMXtFRvHTFHhLJXQrbvoqf3N3gq1L-VmwTK2i83Q/exec",
 
   // The existing front-end checks this timestamp before showing/accepting applications.
   // REGISTRATION_OPEN=false gives it a past close time; true removes the deadline.
@@ -28,7 +29,7 @@ window.CLUB_CONFIG = {
   },
 
   // Official club contact email.
-  CONTACT_EMAIL: "claudebuilder.aou@gmail.com"
+  CONTACT_EMAIL: env.CONTACT_EMAIL || "claudebuilder.aou@gmail.com"
 };
 
 (() => {

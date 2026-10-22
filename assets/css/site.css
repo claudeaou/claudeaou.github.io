@@ -59,7 +59,7 @@
 @import url("./claude/wordmark-type.css?v=20261013type5");
 
 /* Desktop header geometry: centered primary nav + right-aligned actions. */
-@import url("./components/desktop-nav-layout.css?v=20261022nav2");
+@import url("./components/desktop-nav-layout.css?v=20261022nav3");
 
 /* Checkbox normalization: neutralizes global input sizing on confirmation controls. */
 @import url("./components/checkbox-fix.css?v=20261013check1");
@@ -81,4 +81,4 @@
 @import url("./components/pdf-render-fix.css?v=20261013pdf5");
 
 /* Phone header: one working dark-mode toggle beside the menu. */
-@import url("./components/mobile-theme-quick.css?v=20261013theme4");
+@import url("./components/mobile-theme-quick.css?v=20261022theme1");
